@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://your-domain.azurestaticapps.net/sitemap.xml
