@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panoramas in Matterport Virtual Tours | Adostrophe Blog</title>
+    <meta name="description" content="Discover how panoramic images from drones and Apple Vision Pro can now be seamlessly integrated into Matterport virtual tours, enhancing immersive experiences.">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M12 1L3 6v12l9 5 9-5V6l-9-5zm0 2.2L19 6v3.2L12 12 5 9.2V6l7-2.8zM5 10.7L12 14.5l7-3.8V16l-7 3.8-7-3.8v-5.3z'/%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the blog post content */
+        .blog-single-post {
+            max-width: 800px; /* Constrain content width for readability */
+            margin: 0 auto; /* Center the content */
+            padding: 0 var(--spacing-md); /* Add horizontal padding */
+        }
+
+        .blog-post-main-image {
+            max-width: 100%; /* Ensures image scales down on smaller screens */
+            height: auto; /* Maintains aspect ratio */
+            display: block; /* Removes extra space below image */
+            margin: var(--spacing-md) auto; /* Centers the image and adds vertical spacing */
+            border-radius: var(--border-radius); /* Apply site's consistent border radius */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for visual depth */
+        }
+
+        .lead-paragraph {
+            font-size: 1.25rem; /* Larger font for the introductory paragraph */
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin: var(--spacing-md) 0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe,
+        .video-container object,
+        .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Responsive adjustments for blog post content */
+        @media (max-width: 768px) {
+            .blog-single-post {
+                padding: 0 var(--spacing-sm);
+            }
+            .lead-paragraph {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="container nav-flex">
+            <a href="index.html#home" class="logo" aria-label="Adostrophe Home">
+                <svg width="150" height="30" viewBox="0 0 150 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.15 2.5L0 27.5H4.8L12.55 7.85L20.3 27.5H25.1L14.95 2.5H10.15ZM32.7 15.05C32.7 10.95 34.05 7.6 36.75 4.9C39.45 2.2 42.85 0.85 47 0.85C51.15 0.85 54.55 2.2 57.25 4.9C59.95 7.6 61.3 10.95 61.3 15.05C61.3 19.15 59.95 22.5 57.25 25.2C54.55 27.9 51.15 29.25 47 29.25C42.85 29.25 39.45 27.9 36.75 25.2C34.05 22.5 32.7 19.15 32.7 15.05ZM37.95 15.05C37.95 17.5 38.8 19.5 40.5 21.05C42.2 22.6 44.4 23.35 47 23.35C49.6 23.35 51.8 22.6 53.5 21.05C55.2 19.5 56.05 17.5 56.05 15.05C56.05 12.6 55.2 10.6 53.5 9.05C51.8 7.5 49.6 6.75 47 6.75C44.4 6.75 42.2 7.5 40.5 9.05C38.8 10.6 37.95 12.6 37.95 15.05ZM68.1 27.5H63L73.15 2.5H78.25L88.4 27.5H83.3L80.85 20.95H70.6L68.1 27.5ZM71.75 16.3H79.7L75.7 5.75L71.75 16.3ZM96.65 27.5H91.55L101.7 2.5H106.8L116.95 27.5H111.85L109.4 20.95H99.15L96.65 27.5ZM100.3 16.3H108.25L104.25 5.75L100.3 16.3ZM125.85 27.5H120.75L130.9 2.5H136L146.15 27.5H141.05L138.6 20.95H128.35L125.85 27.5ZM129.5 16.3H137.45L133.45 5.75L129.5 16.3Z" />
+                </svg>
+            </a>
+            <button class="mobile-menu-button" aria-label="Open navigation menu" aria-controls="main-navigation" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links" id="main-navigation">
+                <li><a href="index.html#home">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="all-services.html#all-services-hero">Services <span class="dropdown-arrow">▾</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#matterport-hero">Matterport Virtual Tours</a></li>
+                        <li><a href="360-photography.html#three-sixty-hero">360° Photography</a></li>
+                        <li><a href="google-ads.html#google-ads-hero">Google Ads</a></li>
+                        <li><a href="nonprofit.html#nonprofit-hero">Nonprofit Digital Marketing</a></li>
+                        <li><a href="web-dev-seo.html#web-dev-hero">Web Development & SEO</a></li>
+                        <li><a href="all-services.html#all-services-grid">All Services</a></li>
+                    </ul>
+                </li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="blog.html">Blog</a></li> <li><a href="payments.html#payments-hero">Payments</a></li>
+                <li><a href="privacy-policy.html#privacy-policy-hero">Privacy Policy</a></li>
+                <li><a href="index.html#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="blog-post-hero" class="hero-section" style="padding-top: var(--spacing-md); padding-bottom: var(--spacing-md);">
+            <div class="container hero-content">
+                <span class="blog-category">Apple Vision Pro, Drones, Matterport</span>
+                <h1>Panoramas in Matterport Virtual Tours</h1>
+                <p class="section-description" style="margin-bottom: 10px;">Panoramic images from a drone or the Apple Vision Pro can now be added to Matterport virtual tours.</p>
+                <div class="blog-meta text-center">
+                    <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Aug 21, 2023</span> | <span class="blog-tag">Apple Vision Pro</span>, <span class="blog-tag">Drones</span>, <span class="blog-tag">Matterport</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog-content" class="feature-section">
+            <div class="container blog-single-post">
+                <img src="https://placehold.co/800x450/663399/FFFFFF?text=Matterport+Panoramas+Integration" alt="A blend of virtual tour imagery with elements representing drones and the Apple Vision Pro, symbolizing integration." class="blog-post-main-image">
+                <p class="lead-paragraph">360-degree images or **panoramas** can now be added to Matterport virtual tours. If the starting point is a 360-degree image (and not a 3D scan), then the viewer will have to click on the walkthrough icon to begin the tour.</p>
+                <p>Let’s look at what this could potentially mean for those who already employ Matterport tours or are planning to.</p>
+
+                ---
+                <h2>Vision Pro Integration</h2>
+                <p>With all eyes on the upcoming Apple device, businesses are preparing their content to be MR-headset friendly. Here are some features at a glance:</p>
+                <ul>
+                    <li>The headset gives life-size views of your computer apps like browser windows.</li>
+                    <li>Movies like an IMAX theatre at the original resolution it was captured with.</li>
+                    <li>180-degree videos at 8K resolution.</li>
+                    <li>Immersive 3D movies with spatial audio or paired with the AirPods Pro.</li>
+                    <li>Capture panoramic images or videos with the Vision Pro headset, with the button on top. Spatial videos can also be captured with the iPhone 15 Pro.</li>
+                    <li>Life-size screen sharing in video calls. Can be great for presentations.</li>
+                    <li>Micro-OLED display system with eye tracking. Just look at a different window to switch to it.</li>
+                    <li>M2 processor with a separate R1 chip to manage the cameras, sensors and microphones.</li>
+                    <li>LiDAR scanner to create a 3D map of the surroundings, to display windows accordingly.</li>
+                    <li>Infrared sensors for hand tracking.</li>
+                    <li>Integrated cooling system.</li>
+                    <li>External battery, so that the weight is not passed on to the head and neck.</li>
+                    <li>VisionOS SDK to develop with Xcode. RealityKit 3D rendering engine and ARKit APIs.</li>
+                    <li>SwiftUI to add functionalities like 3D interaction to iOS apps.</li>
+                    <li>Unity’s existing apps can be brought to VisionOS with frameworks like XR Interaction Toolkit.</li>
+                </ul>
+                <p>Asmi Jain from Indore is a winner of the Swift Student Challenge, who was appreciated by Tim Cook. Her idea was to track eye movements to help strengthen the eye muscles of the user. There will be many more apps that leverage this innovative eye-tracking feature soon.</p>
+                <p>To develop apps for visionOS in Xcode, you’ll need Apple silicon Macs – M1 and above. Among MacBooks, the latest M3 Max’s top configuration is around 7.5 lakhs.</p>
+                <p>Matterport allows anyone to create a virtual tour using their smartphone (and the free SaaS plan) – if the device is a Pro model with LiDAR, even better. Panoramas captured with an iPhone or Vision Pro headset can be exported manually and then added to a Matterport virtual tour.</p>
+                <p>With Matterport compatibility limited to Meta Quest 2 and Pro, the Apple Vision Pro would make things easier for a VR experience. Now, a regular browser will do and we’ll also be able to see Mattertags.</p>
+
+                ---
+                <h2>Other Cameras</h2>
+                <p>Panoramic images captured from mirrorless and other dual fish-eye lens cameras such as the **GoPro Max** can also be imported into Matterport tours. They may be relevant if someone wants to add gigabit panos or underwater stills, to a Matterport tour.</p>
+                <p>The problem with 360 images is that they are not clickable like 3D scans. However, in the highlights reels, it would be a great slideshow.</p>
+                <p>For example, if we scan a swimming pool of a gated community – the same panoramic image can be used in the virtual tours of multiple villas and apartments. The same goes for promoting different types of rooms in a luxury hotel.</p>
+                <p>For those highly-talented DSLR photographers, this is great news because your lifestyle images could possibly be added to our tours. If your equipment includes an 18-55mm fisheye and a Nodal Ninja, even better. Sky is the limit.</p>
+
+                ---
+                <h2>Flying High with Drones</h2>
+                <p>Speaking of skies, panoramic images from **drones** can also be added to the virtual tours. Refer to DGCA’s DigitalSky FAQs for the process to transfer the UIN because the media is considered as ‘commercial usage’.</p>
+                <p>Aerial photos from devices such as the Skydio 2 or DJI Mavic 3 Cine can be added as 360° images in a Matterport tour as well. In some cases, a blackened area in the tour (like a swimming pool) can be filled up with a 360-degree image, when converted to a 3D scan.</p>
+                <p>Phase One’s 150 MP iXM-SP150 is designed for wide-angle, low-earth orbit captures. The P3 iXM is a more affordable option that’s payload drone mountable. In terms of image clarity and resolution, these cameras set the bar.</p>
+                <p>And then we have the LiDAR scanning Leica BLK2FLY:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/your_leica_blk2fly_video_id" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Leica BLK2FLY Scanning Drone"></iframe>
+                </div>
+                <p>Irrespective of the camera used, the Apple Vision Pro is going to make panoramic media more accessible. Think of affluent markets in Gurgaon or Mumbai – someone would love to see a Matterport virtual tour of a potential home for sale with this headset. The ability to look around (with a panoramic image) is different from watching a video on a giant screen.</p>
+                <p>The headset is still not available in the Apple India stores. When it’s released, we’ll be sure to let you know.</p>
+                <p>Want to know what’s inside the Apple Vision Pro? Watch this video from one of our favourite YouTubers – iFixit:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/your_ifixit_visionpro_teardown_video_id" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Apple Vision Pro Teardown by iFixit"></iframe>
+                </div>
+
+                <p style="margin-top: var(--spacing-lg);">
+                    <a href="360-photography.html#three-sixty-hero" style="color: var(--primary-color); text-decoration: none; margin-right: var(--spacing-sm);">360 Degree Photography - Adostrophe</a>
+                    <a href="services.html#matterport-hero" style="color: var(--primary-color); text-decoration: none;">Matterport Services - Adostrophe</a>
+                </p>
+
+            </div>
+        </section>
+
+        <section id="related-articles" class="blog-section alt-background">
+            <div class="container text-center">
+                <h2>More from Our Blog</h2>
+                <p class="section-description">Keep exploring our insights and updates:</p>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <span class="blog-category">Apple Vision Pro</span>
+                        <h3><a href="iphone-16-camera-controls.html">iPhone 16 Camera Controls: DSLR-like Experience & Vision Pro Integration</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 10, 2024</span>
+                        </div>
+                        <p class="blog-snippet">Explore the new dedicated capture button on the iPhone 16, offering DSLR-like camera controls, AI advancements, and enhanced spatial capture for Apple Vision Pro.</p>
+                        <a href="iphone-16-camera-controls.html" class="read-more-link">Read More</a>
+                    </div>
+                    <div class="blog-card">
+                        <span class="blog-category">AR/VR, Meta Quest</span>
+                        <h3><a href="meta-connect-2024-recap.html">New Virtual Reality Hardware from Meta</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 27, 2024</span>
+                        </div>
+                        <p class="blog-snippet">Meta unveils Quest 3S, Orion AR glasses, and AI upgrades for Ray-Ban smart glasses at Meta Connect, impacting the future of AR/VR and Matterport experiences.</p>
+                        <a href="meta-connect-2024-recap.html" class="read-more-link">Read More</a>
+                    </div>
+                    <div class="blog-card">
+                        <span class="blog-category">Matterport</span>
+                        <h3><a href="matterport-benefits-multi-language.html">Benefits of Matterport in Different Languages</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 28, 2024</span>
+                        </div>
+                        <p class="blog-snippet">We've translated the benefits of Matterport virtual tours into various Indian and International languages to reach a broader audience.</p>
+                        <a href="matterport-benefits-multi-language.html" class="read-more-link">Read More</a>
+                    </div>
+                </div>
+                <a href="blog.html" class="button primary-button" style="margin-top: var(--spacing-lg);">View All Blog Articles</a>
+            </div>
+        </section>
+
+        <section id="contact-blog" class="contact-section">
+            <div class="container text-center">
+                <h2>Ready to Enhance Your Virtual Tours?</h2>
+                <p class="section-description">Explore the possibilities of integrating panoramas from drones and Apple Vision Pro into your Matterport tours. Contact us today!</p>
+                <p class="section-description" style="margin-bottom: var(--spacing-md);">Feel free to call us anytime or leave a message:</p>
+                <a href="index.html#contact" class="button primary-button">Contact Adostrophe</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" itemscope itemtype="https://schema.org/LocalBusiness">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="services.html#matterport-hero">Matterport</a></li>
+                    <li><a href="360-photography.html#three-sixty-hero">360 Degree Photography</a></li>
+                    <li><a href="google-ads.html#google-ads-hero">Google Ads</a></li>
+                    <li><a href="nonprofit.html#nonprofit-hero">Nonprofit</a></li>
+                    <li><a href="web-dev-seo.html#web-dev-hero">Web Dev & SEO</a></li>
+                    <li><a href="all-services.html#all-services-grid">All Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="author-niranjan.html#author-hero">Niranjan (Author)</a></li>
+                    <li><a href="payments.html#payments-hero">Payments</a></li>
+                    <li><a href="privacy-policy.html#privacy-policy-hero">Privacy Policy</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="projects.html">Matterport Projects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <h3>Connect</h3>
+                <p itemprop="name" style="display:none;">Adostrophe</p>
+                <p><a href="tel:+918861188822" itemprop="telephone">+91 88611 88822</a></p>
+                <p><a href="mailto:info@adostrophe.com" itemprop="email">info@adostrophe.com</a></p>
+                <p itemprop="streetAddress">Regus E1 Beech, Manyata Embassy Business Park</p>
+                <p><span itemprop="addressLocality">Yelahanka</span>, <span itemprop="addressRegion">Karnataka</span> <span itemprop="postalCode">560045</span>, <span itemprop="addressCountry">India</span></p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/your-adostrophe-page" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe Facebook page"><img src="https://placehold.co/24x24/000000/ffffff?text=F" alt="Facebook icon"></a>
+                    <a href="https://www.linkedin.com/company/your-adostrophe-page" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe LinkedIn profile"><img src="https://placehold.co/24x24/000000/ffffff?text=L" alt="LinkedIn icon"></a>
+                    <a href="https://www.youtube.com/your-adostrophe-channel" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe YouTube channel"><img src="https://placehold.co/24x24/000000/ffffff?text=Y" alt="YouTube icon"></a>
+                </div>
+                <meta itemprop="url" content="https://www.adostrophe.com">
+                <meta itemprop="logo" content="https://www.adostrophe.com/images/adostrophe-logo.svg">
+                <meta itemprop="areaServed" content="India">
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>© 2025 Adostrophe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

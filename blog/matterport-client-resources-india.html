@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources for Our Matterport Clients | Adostrophe Blog</title>
+    <meta name="description" content="A comprehensive guide to leveraging Matterport virtual tours for businesses in India, covering embedding, image/video extraction, Google Street View uploads, and BIM collaboration.">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M12 1L3 6v12l9 5 9-5V6l-9-5zm0 2.2L19 6v3.2L12 12 5 9.2V6l7-2.8zM5 10.7L12 14.5l7-3.8V16l-7 3.8-7-3.8v-5.3z'/%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for the blog post content */
+        .blog-single-post {
+            max-width: 800px; /* Constrain content width for readability */
+            margin: 0 auto; /* Center the content */
+            padding: 0 var(--spacing-md); /* Add horizontal padding */
+        }
+
+        .blog-post-main-image {
+            max-width: 100%; /* Ensures image scales down on smaller screens */
+            height: auto; /* Maintains aspect ratio */
+            display: block; /* Removes extra space below image */
+            margin: var(--spacing-md) auto; /* Centers the image and adds vertical spacing */
+            border-radius: var(--border-radius); /* Apply site's consistent border radius */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for visual depth */
+        }
+
+        .lead-paragraph {
+            font-size: 1.25rem; /* Larger font for the introductory paragraph */
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            margin: var(--spacing-md) 0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe,
+        .video-container object,
+        .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Responsive adjustments for blog post content */
+        @media (max-width: 768px) {
+            .blog-single-post {
+                padding: 0 var(--spacing-sm);
+            }
+            .lead-paragraph {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="container nav-flex">
+            <a href="index.html#home" class="logo" aria-label="Adostrophe Home">
+                <svg width="150" height="30" viewBox="0 0 150 30" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.15 2.5L0 27.5H4.8L12.55 7.85L20.3 27.5H25.1L14.95 2.5H10.15ZM32.7 15.05C32.7 10.95 34.05 7.6 36.75 4.9C39.45 2.2 42.85 0.85 47 0.85C51.15 0.85 54.55 2.2 57.25 4.9C59.95 7.6 61.3 10.95 61.3 15.05C61.3 19.15 59.95 22.5 57.25 25.2C54.55 27.9 51.15 29.25 47 29.25C42.85 29.25 39.45 27.9 36.75 25.2C34.05 22.5 32.7 19.15 32.7 15.05ZM37.95 15.05C37.95 17.5 38.8 19.5 40.5 21.05C42.2 22.6 44.4 23.35 47 23.35C49.6 23.35 51.8 22.6 53.5 21.05C55.2 19.5 56.05 17.5 56.05 15.05C56.05 12.6 55.2 10.6 53.5 9.05C51.8 7.5 49.6 6.75 47 6.75C44.4 6.75 42.2 7.5 40.5 9.05C38.8 10.6 37.95 12.6 37.95 15.05ZM68.1 27.5H63L73.15 2.5H78.25L88.4 27.5H83.3L80.85 20.95H70.6L68.1 27.5ZM71.75 16.3H79.7L75.7 5.75L71.75 16.3ZM96.65 27.5H91.55L101.7 2.5H106.8L116.95 27.5H111.85L109.4 20.95H99.15L96.65 27.5ZM100.3 16.3H108.25L104.25 5.75L100.3 16.3ZM125.85 27.5H120.75L130.9 2.5H136L146.15 27.5H141.05L138.6 20.95H128.35L125.85 27.5ZM129.5 16.3H137.45L133.45 5.75L129.5 16.3Z" />
+                </svg>
+            </a>
+            <button class="mobile-menu-button" aria-label="Open navigation menu" aria-controls="main-navigation" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <ul class="nav-links" id="main-navigation">
+                <li><a href="index.html#home">Home</a></li>
+                <li class="has-dropdown">
+                    <a href="all-services.html#all-services-hero">Services <span class="dropdown-arrow">▾</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#matterport-hero">Matterport Virtual Tours</a></li>
+                        <li><a href="360-photography.html#three-sixty-hero">360° Photography</a></li>
+                        <li><a href="google-ads.html#google-ads-hero">Google Ads</a></li>
+                        <li><a href="nonprofit.html#nonprofit-hero">Nonprofit Digital Marketing</a></li>
+                        <li><a href="web-dev-seo.html#web-dev-hero">Web Development & SEO</a></li>
+                        <li><a href="all-services.html#all-services-grid">All Services</a></li>
+                    </ul>
+                </li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="blog.html">Blog</a></li> <li><a href="payments.html#payments-hero">Payments</a></li>
+                <li><a href="privacy-policy.html#privacy-policy-hero">Privacy Policy</a></li>
+                <li><a href="index.html#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="blog-post-hero" class="hero-section" style="padding-top: var(--spacing-md); padding-bottom: var(--spacing-md);">
+            <div class="container hero-content">
+                <span class="blog-category">Matterport</span>
+                <h1>Resources for Our Matterport Clients</h1>
+                <p class="section-description" style="margin-bottom: 10px;">We’ve compiled a list of resources for those who had used our Matterport scanning services in India. Get the most out of your 3D models:</p>
+                <div class="blog-meta text-center">
+                    <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Jul 02, 2023</span> | <span class="blog-tag">Matterport</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog-content" class="feature-section">
+            <div class="container blog-single-post">
+                <img src="https://placehold.co/800x450/4CAF50/FFFFFF?text=Matterport+Resources" alt="A modern office space with Matterport virtual tour interface elements, representing the utility of 3D models." class="blog-post-main-image">
+                <p class="lead-paragraph">Whether you had received a paid or a free Matterport space from us, there are plenty of things you could use it for. Here are some of the popular advantages of a 3D virtual tour for a business in India.</p>
+
+                <h2>Embed Your Virtual Tour</h2>
+                <p>To get the basics out of the way, Matterport is a U.S. based SaaS company that also manufactures some hardware for scanning purposes. This means that every month (or year), we have to pay them for hosting the files (typically 360° images) in their servers.</p>
+                <p>So, if you have a functional virtual tour, you might as well share it with your clients or customers. One of the best ways of doing this is by embedding the tour in your website.</p>
+                <p>This way, you’ll be able to connect with customers who prefer staying anonymous – as opposed to sending them the link over Whatsapp.</p>
+                <p>Once you click the “Play” button and wait for 2-3 seconds, the slideshows will be shown automatically. This feature is setup using **URL Parameters**. In the above case, we’ve used two of them:</p>
+                <ul>
+                    <li>`ts=2`: Two seconds time delay for autoplay of the highlights.</li>
+                    <li>`hl=0`: The highlight windows on the bottom will hide automatically, to get a full screen experience.</li>
+                </ul>
+                <p>Learn more about URL Parameters on the Matterport official website <a href="https://support.matterport.com/s/article/URL-Parameters" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">here</a>. Although possible, we wouldn’t recommend a tour to autoplay when your visitors scroll your page without clicking Play. It is a challenge in India to explain what a virtual tour is to those who are unfamiliar with the concept. In one instance, a client wanted it enabled for their website visitors who were home buyers – affluent but not quite tech savvy.</p>
+                <p>Another example of our virtual tour embedded on the client’s website is <a href="https://www.radissonhotels.com/en-us/hotels/radisson-red-mohali" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">here</a> – Radisson RED, Mohali. Scroll to the middle of the page for the entire hotel’s tour. Event spaces are captured separately in their own tours, wherein different setups are required – such as corporate meetings, weddings, etc.</p>
+                <p>When we complete our scans, we offer the main URL, embed code (iframe HTML), images and a 60-second video for all clients.</p>
+
+                <h2>Extract Images from Your Tour</h2>
+                <p>A Matterport virtual tour’s panoramic and 2D (traditional images) can be extracted from any point in the tour. This gives you the flexibility to choose dramatic angles – like the corner of a classroom. Note that such content is unique and can’t be compared to lifestyle photography. Traditional photography techniques such as adjustment of ISO, exposure and shutter settings are not applicable here.</p>
+                <p>Let us know your requirements, and we’ll extract these images for you and send it over without any loss in quality.</p>
+                <p>If you’re publishing the photos on your website, ensure they are optimised (compressed) so that your visitors don’t face any lag in areas where network connectivity is slow.</p>
+                <p>For all the fancy things a virtual tour can do, in many ways, sharing the data as a regular photo might just do the trick. Uploading to Facebook or other social media channels is a great example.</p>
+                <p>Before we move away from image extraction tips, what you see below is a panoramic photo that’s hosted on Google Maps. We’re embedding this image, so you’ll be able to pan around naturally, without having to leave our website:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/channel/your-adostrophe-channel" frameborder="0" allowfullscreen style="border:0"></iframe>
+                </div>
+                <p>The post above is a standalone panoramic image of an office space at Mohali. The below embed is of a mall (for architects and designers) in Chennai, which is connected to other panoramas. Now, your customers can see your content directly from their Google navigational apps.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/YOUR_VICTORINOX_VIDEO_ID" frameborder="0" allowfullscreen style="border:0"></iframe>
+                </div>
+                <p>Digital Marketing with tools such as Matterport allows you to add Mattertags (informational tags) within the tour, so that a potential customer can “learn more” or “add to cart”, which is not possible from Google Street View.</p>
+
+                <h2>Upload Videos to Various Platforms</h2>
+                <p>So far, we’ve seen how you can embed your virtual tour in your website and to extract static images to share on social media. Next, a popular content consumption method for a broad audience – videos!</p>
+                <p>Once you’ve setup the highlights reels, those slideshows can be presented as a walkthrough video. Here, your audience won’t have to click around to interact.</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/YOUR_FURNITURE_SHOWROOM_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Matterport Walkthrough Video Example 1"></iframe>
+                </div>
+                <p>The limitation of a video is that the user is unable to ‘learn more’ about an artefact if she wants to. Consider the textiles section from Nagaland – the slideshow is just a breeze: your user sees what you show them, not what they want to see. In a virtual tour, however, they can see the content at their own pace.</p>
+                <p>This functionality can be a dealmaker (or breaker) in Real Estate. To build trust with a potential tenant or a home buyer, they will have to see the rooms at their own pace. Here’s another video:</p>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/your_youtube_video_id_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Matterport Walkthrough Video Example 2"></iframe>
+                </div>
+                <p>Contact us to create such 4K videos, based on virtual tours. You can also upload them on Instagram, Google Maps, Twitter and other channels directly.</p>
+                <p>Subscribe to our channel while you’re at it – <a href="https://www.youtube.com/@adostrophe" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">https://www.youtube.com/@adostrophe</a>. If you’re an agency, we can offer this video creation service separately, so you can upload on your channel, with your unique branding.</p>
+
+                <h2>Collaborate with BIM & Other Advanced Features</h2>
+                <p>Most clients should be able to get the above functionalities done on their own. At an advanced level, to collaborate with multiple teams for designing purposes, the virtual tours can help up to an extent.</p>
+                <p>With **BIM (Building Information Modelling)**, the files can be used in applications such as Autodesk Revit for essential tasks such as facilities management. Note that these are paid Add-Ons that have to be ordered separately after the Matterport model has been processed.</p>
+                <p>Typical Matterport tours were so far considered not accurate enough for architectural and as-built data collection. However, dense point clouds from devices such as the Faro Focus and Leica BLK360 G2 may not be necessary for all clients.</p>
+                <p>The LOD 200 (Level of Detail) and range with devices such as Matterport scanners have to be made transparent upfront, especially with non-Indian businesses who could possibly sue for project delays. The Pro3 scanner is LiDAR based, however, the point clouds are not as dense as those from high-end total station scanners.</p>
+                <p>Unfortunately, the **Leica BLK360 G2 is not compatible with Matterport yet**. You can use your existing models to generate files such as those for BIM, E57, OBJ and more. The Matterport plugin is available at the Autodesk App store to use with Revit. External links have been added at the end of this article to learn more.</p>
+                <p>Contact us if you have any questions regarding these features or if you’d like to learn more about Leica BLK360 scanners. We’ll support you before, during and after the purchase, along with demos anywhere in India. The GST billing will be processed with the manufacturer directly.</p>
+                <p>With the upcoming iPhone 15 devices and Vision Pro headsets keeping a keen eye out for LiDAR content, promoting your properties with panoramic media might give an advantage. Collaboration is now more important than ever:</p>
+                <p>Showrooms and Customer Experience Centres can display their products using **MR (Mixed Reality) headsets**. If Apple does release a lower cost headset, the market adoption might go larger. This could make a substantial difference for the Travel and Hospitality, Retail and other businesses who can advertise remotely.</p>
+                <p>From **July 2023, the pricing structure of Matterport has changed**. We recommend our clients to create their own Matterport account (Professional or above) so that we can upload the scans directly. Otherwise the hosting is limited to one year for paid projects and one month for models that were created for free.</p>
+                <p>We will keep all our blog posts updated regularly. Past articles have been removed to keep the content relevant to our core offerings. For any questions, feel free to <a href="index.html#contact" style="color: var(--primary-color); text-decoration: none;">contact us</a> anytime.</p>
+
+                ---
+                <h2>External Links:</h2>
+                <ul>
+                    <li>We recommend optimising your website with <a href="https://www.diib.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Diib Answer Engine</a>. It monitors SEO metrics and syncs with your Google Analytics, Facebook Business and Google Business Profile.</li>
+                    <li><a href="https://matterport.com/integrations/bim" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">BIM - Matterport</a></li>
+                    <li><a href="https://www.apple.com/apple-vision-pro/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Apple Vision Pro - Apple</a></li>
+                    <li><a href="https://www.phaseone.com/industries/aerial/products/ixm-series" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">XC Camera Launch - Phase One</a></li>
+                    <li><a href="https://www.amazon.com/stores/Matterport/homepage/node/20857948011" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none;">Matterport Store at Amazon.com (U.S.)</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="related-articles" class="blog-section alt-background">
+            <div class="container text-center">
+                <h2>More from Our Blog</h2>
+                <p class="section-description">Keep exploring our insights and updates:</p>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <span class="blog-category">Apple Vision Pro</span>
+                        <h3><a href="iphone-16-camera-controls.html">iPhone 16 Camera Controls: DSLR-like Experience & Vision Pro Integration</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 10, 2024</span>
+                        </div>
+                        <p class="blog-snippet">Explore the new dedicated capture button on the iPhone 16, offering DSLR-like camera controls, AI advancements, and enhanced spatial capture for Apple Vision Pro.</p>
+                        <a href="iphone-16-camera-controls.html" class="read-more-link">Read More</a>
+                    </div>
+                    <div class="blog-card">
+                        <span class="blog-category">AR/VR, Meta Quest</span>
+                        <h3><a href="meta-connect-2024-recap.html">New Virtual Reality Hardware from Meta</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 27, 2024</span>
+                        </div>
+                        <p class="blog-snippet">Meta unveils Quest 3S, Orion AR glasses, and AI upgrades for Ray-Ban smart glasses at Meta Connect, impacting the future of AR/VR and Matterport experiences.</p>
+                        <a href="meta-connect-2024-recap.html" class="read-more-link">Read More</a>
+                    </div>
+                    <div class="blog-card">
+                        <span class="blog-category">Matterport</span>
+                        <h3><a href="matterport-benefits-multi-language.html">Benefits of Matterport in Different Languages</a></h3>
+                        <div class="blog-meta">
+                            <span class="blog-author">By <a href="author-niranjan.html">Adostrophe</a></span> | <span class="blog-date">Sep 28, 2024</span>
+                        </div>
+                        <p class="blog-snippet">We've translated the benefits of Matterport virtual tours into various Indian and International languages to reach a broader audience.</p>
+                        <a href="matterport-benefits-multi-language.html" class="read-more-link">Read More</a>
+                    </div>
+                </div>
+                <a href="blog.html" class="button primary-button" style="margin-top: var(--spacing-lg);">View All Blog Articles</a>
+            </div>
+        </section>
+
+        <section id="contact-blog" class="contact-section">
+            <div class="container text-center">
+                <h2>Have Questions About Your Matterport Tour?</h2>
+                <p class="section-description">Our team is here to help you maximize the utility of your 3D models. Reach out for support or to discuss advanced integrations.</p>
+                <p class="section-description" style="margin-bottom: var(--spacing-md);">Feel free to call us anytime or leave a message:</p>
+                <a href="index.html#contact" class="button primary-button">Contact Adostrophe</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" itemscope itemtype="https://schema.org/LocalBusiness">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="services.html#matterport-hero">Matterport</a></li>
+                    <li><a href="360-photography.html#three-sixty-hero">360 Degree Photography</a></li>
+                    <li><a href="google-ads.html#google-ads-hero">Google Ads</a></li>
+                    <li><a href="nonprofit.html#nonprofit-hero">Nonprofit</a></li>
+                    <li><a href="web-dev-seo.html#web-dev-hero">Web Dev & SEO</a></li>
+                    <li><a href="all-services.html#all-services-grid">All Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="author-niranjan.html#author-hero">Niranjan (Author)</a></li>
+                    <li><a href="payments.html#payments-hero">Payments</a></li>
+                    <li><a href="privacy-policy.html#privacy-policy-hero">Privacy Policy</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="projects.html">Matterport Projects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <h3>Connect</h3>
+                <p itemprop="name" style="display:none;">Adostrophe</p>
+                <p><a href="tel:+918861188822" itemprop="telephone">+91 88611 88822</a></p>
+                <p><a href="mailto:info@adostrophe.com" itemprop="email">info@adostrophe.com</a></p>
+                <p itemprop="streetAddress">Regus E1 Beech, Manyata Embassy Business Park</p>
+                <p><span itemprop="addressLocality">Yelahanka</span>, <span itemprop="addressRegion">Karnataka</span> <span itemprop="postalCode">560045</span>, <span itemprop="addressCountry">India</span></p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/your-adostrophe-page" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe Facebook page"><img src="https://placehold.co/24x24/000000/ffffff?text=F" alt="Facebook icon"></a>
+                    <a href="https://www.linkedin.com/company/your-adostrophe-page" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe LinkedIn profile"><img src="https://placehold.co/24x24/000000/ffffff?text=L" alt="LinkedIn icon"></a>
+                    <a href="https://www.youtube.com/your-adostrophe-channel" target="_blank" rel="noopener noreferrer" aria-label="Adostrophe YouTube channel"><img src="https://placehold.co/24x24/000000/ffffff?text=Y" alt="YouTube icon"></a>
+                </div>
+                <meta itemprop="url" content="https://www.adostrophe.com">
+                <meta itemprop="logo" content="https://www.adostrophe.com/images/adostrophe-logo.svg">
+                <meta itemprop="areaServed" content="India">
+            </div>
+        </div>
+        <div class="container copyright">
+            <p>© 2025 Adostrophe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

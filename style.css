@@ -1,0 +1,1824 @@
+/* Basic Resets & Global Styles */
+:root {
+    --primary-color: #1a1a1a; /* Dark charcoal/black for primary elements and text */
+    --secondary-color: #f0f0f0; /* Light grey for subtle backgrounds and contrasts */
+    --text-color: #1d1d1f; /* Very dark grey, almost black, for main body text */
+    --light-text-color: #6e6e73; /* Medium grey for descriptions and less prominent text */
+    --white: #ffffff; /* Pure white */
+    --border-radius: 12px; /* Uniform rounded corners for elements */
+    --spacing-sm: 16px; /* Small spacing unit */
+    --spacing-md: 32px; /* Medium spacing unit */
+    --spacing-lg: 64px; /* Large spacing unit */
+
+    /* Custom variables added based on usage in your CSS */
+    --heading-color: var(--text-color); /* Headings typically use the main text color */
+    --light-background: #f9f9f9; /* A light background color used in several sections */
+    --primary-color-rgb: 26, 26, 26; /* RGB components of --primary-color for rgba usage */
+    --header-height: 60px; /* Define a consistent header height for mobile menu positioning */
+}
+
+/* Universal box-sizing for consistent layout behavior */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Base body styles: font, line height, colors, anti-aliasing */
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white);
+    -webkit-font-smoothing: antialiased; /* Smoother font rendering for WebKit browsers */
+    -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox on macOS */
+}
+
+/* Container for consistent content width and centering */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md); /* Horizontal padding */
+}
+
+/* Typography styles for headings and paragraphs */
+h1, h2, h3 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+    color: var(--heading-color); /* Headings use the defined heading color */
+}
+
+h1 {
+    font-size: 3rem; /* Large heading */
+}
+
+h2 {
+    font-size: 2.25rem; /* Medium-large heading */
+}
+
+h3 {
+    font-size: 1.75rem; /* Medium heading */
+}
+
+p {
+    font-size: 1.125rem; /* Standard paragraph text size */
+    line-height: 1.7;
+    margin-bottom: var(--spacing-sm);
+    color: var(--light-text-color); /* Lighter grey for default paragraph text */
+}
+
+.section-description {
+    font-size: 1.25rem; /* Larger description text for sections */
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg); /* Centered with bottom margin */
+    color: var(--light-text-color);
+}
+
+/* --- Header and Navigation Bar --- */
+.header {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    backdrop-filter: blur(10px); /* Blurry effect for content behind it */
+    position: sticky; /* Stays at the top when scrolling */
+    top: 0;
+    z-index: 1000; /* Ensures it's above other content */
+    padding: var(--spacing-sm) 0;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08); /* Subtle bottom shadow */
+    height: var(--header-height); /* Ensure consistent height */
+    display: flex;
+    align-items: center;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between; /* Logo on left, nav items on right */
+    align-items: center;
+    width: 100%; /* Ensure it takes full width of container */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex; /* Aligns SVG with text */
+    align-items: center;
+}
+
+.logo svg {
+    height: 24px; /* SVG height */
+    width: auto;
+    fill: currentColor; /* SVG inherits parent's text color */
+    margin-right: 8px; /* Space between logo SVG and text */
+}
+
+/* Desktop Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex; /* Horizontal layout for desktop */
+    gap: var(--spacing-md); /* Space between nav items */
+}
+
+.nav-links ul { /* Target the actual <ul> inside nav-links */
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.nav-links li {
+    position: relative; /* Essential for dropdown positioning */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+    padding: 8px 0;
+    display: flex; /* For aligning text and dropdown arrow */
+    align-items: center;
+    gap: 5px; /* Space between text and arrow */
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+    color: var(--light-text-color); /* Lighter grey on hover/focus for monochrome */
+}
+
+.dropdown-arrow {
+    font-size: 0.7em; /* Smaller arrow size */
+    transition: transform 0.3s ease; /* Smooth rotation */
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Position directly below the parent link */
+    left: 0;
+    background-color: var(--white);
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    z-index: 10; /* Ensures dropdown is above other content */
+    list-style: none;
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Clips content if it overflows rounded corners */
+    padding: 8px 0;
+    opacity: 0; /* Starts transparent */
+    visibility: hidden; /* Hidden from screen readers/interactions */
+    transform: translateY(10px); /* Starts slightly offset for animation */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; /* Smooth animation for appearance */
+}
+
+/* Show dropdown on hover/focus within the parent li */
+.has-dropdown:hover .dropdown-menu,
+.has-dropdown:focus-within .dropdown-menu {
+    display: block; /* Makes it visible */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Moves to its final position */
+}
+
+/* Rotate arrow when dropdown is open */
+.has-dropdown:hover .dropdown-arrow,
+.has-dropdown:focus-within .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu li a {
+    color: var(--text-color);
+    padding: 10px var(--spacing-md);
+    text-decoration: none;
+    display: block; /* Makes the entire list item clickable */
+    white-space: nowrap; /* Prevents text from wrapping */
+    font-weight: 400;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+    background-color: var(--secondary-color); /* Light grey hover for dropdown items */
+    color: var(--text-color);
+}
+
+/* Hamburger Menu Icon (Hidden on Desktop, shown on Mobile) */
+.mobile-menu-button {
+    display: none; /* Hidden by default for desktop */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001; /* Above nav links when mobile menu is open */
+}
+
+.mobile-menu-button .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out; /* Smooth transition for animation */
+}
+
+/* Hamburger icon animation when active (open) */
+.mobile-menu-button.active .bar:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+
+.mobile-menu-button.active .bar:nth-child(2) {
+    opacity: 0; /* Hide middle bar */
+}
+
+.mobile-menu-button.active .bar:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+/* --- Universal Button Styles --- */
+.button {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 9999px; /* Pill shape */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transitions for hover/focus */
+    border: none;
+    text-align: center;
+}
+
+.primary-button {
+    background-color: var(--primary-color); /* Dark primary button */
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Darker shadow for contrast */
+}
+
+.primary-button:hover,
+.primary-button:focus {
+    background-color: #333; /* Slightly lighter dark on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: var(--text-color); /* Dark text for secondary button */
+    border: 2px solid var(--text-color); /* Dark border */
+}
+
+.secondary-button:hover,
+.secondary-button:focus {
+    background-color: var(--text-color); /* Dark background on hover */
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* --- General Section Styling --- */
+section {
+    padding: var(--spacing-lg) 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.alt-background {
+    background-color: var(--secondary-color); /* Light grey background for alternating sections */
+}
+
+/* --- Hero Section Specific Styling --- */
+.hero-section {
+    min-height: 80vh; /* Minimum height relative to viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-lg) var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+    /* Background image for the hero section */
+    /* REMINDER: Replace with your actual, optimized hero image */
+    background-image: url('https://placehold.co/1920x1080/404040/ffffff?text=Immersive+3D+Experience');
+    background-size: cover; /* Cover the entire section */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat;
+    color: var(--white); /* White text over the dark background image */
+    padding-top: calc(var(--spacing-lg) * 1.5); /* Increased top padding */
+    padding-bottom: calc(var(--spacing-lg) * 1.5); /* Increased bottom padding */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* Ensures text content is above the background image */
+    max-width: 900px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay for text readability */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+}
+
+.hero-section h1 {
+    font-size: 4rem; /* Larger heading for hero */
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+    color: var(--white); /* White heading */
+}
+
+.hero-section h2 {
+    font-size: 2rem; /* Larger subheading for hero */
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9); /* Lighter white for sub-heading */
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-section p {
+    font-size: 1.375rem; /* Larger paragraph for hero */
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    color: rgba(255, 255, 255, 0.8); /* Lighter white for paragraph */
+}
+
+/* Hide the individual image tag in HTML, as background-image is used */
+.hero-image {
+    display: none;
+}
+
+/* --- Feature Sections (e.g., Event Spaces, Hospitality, Showrooms) --- */
+.feature-section {
+    padding: var(--spacing-lg) 0;
+}
+
+.feature-grid {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.feature-grid.reverse-order {
+    flex-direction: row-reverse; /* Reverses order of text and image */
+}
+
+.feature-text {
+    flex: 1; /* Takes equal space */
+    padding: var(--spacing-md) 0;
+}
+
+.feature-text h3 {
+    font-size: 2.5rem; /* Large heading within feature section */
+}
+
+.feature-image {
+    flex: 1; /* Takes equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Subtle shadow for images */
+}
+
+.feature-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+/* --- Portfolio Section --- */
+.portfolio-section .section-description {
+    margin-bottom: var(--spacing-md);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid columns */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.portfolio-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Lift effect on hover */
+    text-align: center;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 250px; /* Fixed height for consistency in portfolio cards */
+    object-fit: cover; /* Ensures image covers the area */
+    display: block;
+}
+
+.portfolio-item p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: var(--spacing-sm);
+    margin: 0;
+}
+
+/* --- Adostrophe Advantage Section --- */
+.advantage-section {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--primary-color); /* Dark background for this section */
+    color: var(--white);
+    text-align: center;
+}
+
+.advantage-section h2 {
+    color: var(--white); /* White heading on dark background */
+}
+
+.advantage-section .section-description {
+    color: rgba(255, 255, 255, 0.8); /* Lighter white for description */
+    margin-bottom: var(--spacing-md);
+}
+
+.advantage-section .primary-button {
+    background-color: var(--white); /* White button on dark background */
+    color: var(--primary-color); /* Dark text on white button */
+}
+.advantage-section .primary-button:hover {
+    background-color: var(--secondary-color); /* Light grey on hover */
+    color: var(--primary-color);
+}
+
+/* --- Our Comprehensive Services Cards Section --- */
+.our-services-section {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--white); /* White background to contrast other sections */
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.service-card {
+    background-color: var(--secondary-color); /* Light grey cards */
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color); /* Dark heading */
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: var(--light-text-color);
+    flex-grow: 1; /* Ensures paragraphs take up available space, aligning buttons */
+    margin-bottom: var(--spacing-sm);
+}
+
+.service-card .read-more {
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+    color: var(--primary-color); /* Dark link */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: color 0.3s ease;
+}
+
+.service-card .read-more:hover {
+    text-decoration: underline;
+}
+
+/* --- FAQ Section --- */
+.faq-accordion .faq-item {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    margin-bottom: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); /* Subtle shadow for accordion items */
+    overflow: hidden; /* For smooth answer collapse animation */
+}
+
+.faq-question {
+    background-color: var(--white);
+    color: var(--text-color);
+    font-size: 1.125rem;
+    font-weight: 500;
+    width: 100%;
+    text-align: left;
+    padding: var(--spacing-md);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question::after {
+    content: '+'; /* Plus sign for closed state */
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.faq-question.active::after {
+    content: '−'; /* Minus sign for open state */
+    transform: rotate(0deg); /* No rotation needed if using minus sign */
+}
+
+.faq-question:hover {
+    background-color: var(--secondary-color); /* Light grey on hover */
+}
+
+.faq-answer {
+    padding: 0 var(--spacing-md);
+    max-height: 0; /* Hidden by default */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Smooth slide animation */
+    color: var(--light-text-color);
+}
+
+/* NOTE: If using JS to dynamically set max-height, remove `max-height: 200px;` from here */
+.faq-answer.open {
+    /* If using JS `scrollHeight` for max-height, you would remove this `max-height` */
+    /* max-height: 200px; */ /* Max height when open (adjust if content exceeds this) */
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md); /* Apply padding when open */
+}
+
+.faq-answer p {
+    margin-bottom: 0; /* Remove default paragraph margin within FAQ answer */
+}
+
+/* --- Generic Iframe Container (for Video & Maps) --- */
+/* Renamed from .video-embed-placeholder and .map-embed-container for reusability */
+.iframe-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Default 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    height: 0;
+    overflow: hidden;
+    max-width: 800px; /* Default max-width for videos */
+    margin: 0 auto var(--spacing-lg);
+    background: #e0e0e0; /* Placeholder background */
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: var(--border-radius);
+}
+
+/* Specific adjustment for map iframes if they need a different aspect ratio */
+/* Apply this class to the iframe-container specifically for maps */
+.iframe-container.map-ratio-4-3 {
+    padding-bottom: 75%; /* 4:3 Aspect Ratio for maps */
+}
+
+
+/* --- Contact Section (on main page) --- */
+.contact-section {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--secondary-color); /* Light grey background for contrast */
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--primary-color); /* Dark footer background */
+    color: rgba(255, 255, 255, 0.7); /* Lighter white text for readability */
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    font-size: 0.9375rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-column h3 {
+    color: var(--white); /* White headings in footer */
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    color: inherit; /* Inherits color from parent */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--white); /* White hover for links in dark footer */
+}
+
+.social-icons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* Makes placeholder icons white on dark background */
+}
+
+.copyright {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator line */
+}
+
+/* --- Blog Section Styles --- */
+.blog-section {
+    padding: 60px 0;
+    background-color: var(--light-background); /* Using variable for consistency */
+}
+
+.blog-section .section-description {
+    max-width: 700px;
+    margin: 0 auto 40px;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.blog-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes button to bottom */
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.blog-card .blog-category {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.blog-card h3 {
+    font-size: 1.5em;
+    color: var(--heading-color);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.blog-card .blog-meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.blog-card .blog-snippet {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allows snippet to take up available space */
+}
+
+.blog-card .read-more-link {
+    display: inline-block;
+    color: var(--primary-color); /* Changed to primary color for visibility */
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-card .read-more-link:hover {
+    color: var(--light-text-color); /* Or a darker shade of secondary */
+    text-decoration: underline;
+}
+
+/* Ensure buttons in blog section have space */
+.blog-section .button {
+    margin-top: 40px;
+}
+
+/* --- Blog Archive Page Styles --- */
+.blog-archive-section {
+    padding: 80px 0;
+    background-color: var(--light-background);
+}
+
+.blog-archive-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+}
+
+.blog-archive-section .section-description {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.blog-list {
+    display: grid;
+    gap: 40px; /* Space between blog items */
+    max-width: 900px; /* Max width for the blog list */
+    margin: 0 auto;
+}
+
+.blog-item {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.blog-item-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.blog-item-title a {
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-item-title a:hover {
+    color: var(--primary-color);
+}
+
+.blog-meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.blog-meta .blog-author,
+.blog-meta .blog-date,
+.blog-meta .blog-categories {
+    margin-right: 15px; /* Spacing between meta info */
+}
+
+.blog-meta .blog-categories {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.blog-excerpt {
+    font-size: 1.05em;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Ensures content pushes button down */
+}
+
+/* Adjust button style for blog items */
+.blog-item .button.secondary-button {
+    align-self: flex-start; /* Align button to the left */
+    padding: 10px 25px;
+    font-size: 0.95em;
+}
+
+/* --- About Page Specific Styles --- */
+
+.about-hero-section {
+    padding: 80px 0;
+    background-color: var(--light-background); /* Use a light background for the hero */
+    color: var(--heading-color);
+    text-align: center;
+}
+
+.about-hero-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+}
+
+.about-hero-section .section-description {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.about-content-section {
+    padding: 60px 0;
+}
+
+.about-content {
+    max-width: 1000px; /* Adjust max-width as needed */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.about-intro-text h2 {
+    font-size: 2em;
+    color: var(--heading-color);
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.about-intro-text p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.about-intro-image {
+    text-align: center;
+}
+
+.about-intro-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-intro-image .image-caption {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 10px;
+}
+
+.about-experience {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.about-experience h2 {
+    font-size: 2em;
+    color: var(--heading-color);
+    margin-bottom: 25px;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.experience-card {
+    background-color: var(--secondary-color); /* Using variable for consistency */
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.experience-card:hover {
+    transform: translateY(-5px);
+}
+
+.experience-card h3 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.experience-card p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* --- Map Showcase Section Styles (used with .iframe-container) --- */
+.map-showcase-section {
+    padding: 80px 0;
+    background-color: var(--white); /* White background for maps */
+}
+
+.map-showcase-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+}
+
+.map-showcase-section .section-description {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.map-section-item {
+    margin-bottom: 60px;
+}
+
+.map-section-item h3 {
+    font-size: 2em;
+    color: var(--heading-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.map-section-item p {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 25px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.map-section-item .highlight {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.map-caption {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 15px;
+}
+
+/* --- Credibility Section --- */
+.about-credentials {
+    margin-bottom: 60px;
+    text-align: left; /* Default left align */
+}
+
+.about-credentials h2 {
+    font-size: 2em;
+    color: var(--heading-color);
+    margin-bottom: 25px;
+    text-align: center; /* Center align for consistency */
+}
+
+.credentials-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+    max-width: 800px; /* Constrain width for readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.credentials-list li {
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.credentials-list li::before {
+    content: "✓";
+    color: var(--primary-color); /* Changed to primary color for visibility */
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.about-credentials .note {
+    font-style: italic;
+    color: #777;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+.startup-india-badge {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.startup-india-badge img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.startup-india-badge p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Horizontal rule for separation */
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 60px auto;
+    width: 80%; /* Adjust width as needed */
+}
+
+/* --- Contact Page Specific Styles --- */
+
+.contact-hero-section {
+    padding: 80px 0;
+    background-color: var(--light-background); /* Use a light background for the hero */
+    color: var(--heading-color);
+    text-align: center;
+}
+
+.contact-hero-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+}
+
+.contact-hero-section .section-description {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.contact-details-section {
+    padding: 60px 0;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    align-items: stretch; /* Changed to stretch for equal height blocks */
+}
+
+.contact-info-block,
+.contact-location-block {
+    background-color: var(--white); /* Using variable for consistency */
+    border-radius: var(--border-radius); /* Use global variable */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 35px;
+}
+
+.contact-info-block h2,
+.contact-location-block h2 {
+    font-size: 2em;
+    color: var(--heading-color);
+    margin-bottom: 25px;
+}
+
+.contact-intro-text {
+    font-size: 1.05em;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.contact-method {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.contact-method .icon {
+    font-size: 1.8em;
+    color: var(--primary-color);
+    margin-right: 15px;
+    line-height: 1; /* Align icon vertically */
+}
+
+.contact-method p {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--heading-color);
+    font-weight: 500;
+}
+
+.contact-method a {
+    color: #444;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.contact-method a:hover {
+    color: var(--primary-color);
+}
+
+.contact-method span {
+    display: block;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 5px;
+}
+
+.response-note {
+    font-style: italic;
+    font-size: 0.95em;
+    color: #666;
+    margin-top: 30px;
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 15px;
+}
+
+/* Location Block Specific */
+.contact-location-block address {
+    font-style: normal; /* Override default italic address style */
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+/* Reusing .iframe-container with specific map ratio */
+.contact-location-block .iframe-container {
+    max-width: 100%; /* Override default max-width for contact map */
+    margin: 20px auto; /* Adjust margin for smaller container */
+    padding-bottom: 75%; /* 4:3 Aspect Ratio for the map, common for contact maps */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.location-note {
+    font-size: 0.95em;
+    color: #666;
+    line-height: 1.6;
+}
+
+.location-note .highlight {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* --- Social Connect Section --- */
+.social-connect-section {
+    padding: 60px 0;
+    background-color: var(--light-background);
+    text-align: center;
+}
+
+.social-connect-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+}
+
+.social-connect-section .section-description {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    font-size: 1.05em;
+    color: #555;
+}
+
+.social-icons-large {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between icons */
+}
+
+.social-icons-large a {
+    display: inline-block;
+    width: 50px; /* Larger icon size */
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--secondary-color); /* Light background for icons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-icons-large a:hover {
+    transform: translateY(-3px);
+    background-color: var(--primary-color); /* Hover effect */
+}
+
+.social-icons-large a:hover img {
+    filter: brightness(0) invert(1); /* Change icon to white on hover */
+}
+
+.social-icons-large img {
+    width: 60%; /* Make icon slightly smaller than container */
+    height: 60%;
+    object-fit: contain;
+}
+
+/* --- Contact Form Section (Optional) --- */
+.contact-form-section {
+    padding: 60px 0;
+    background-color: var(--white);
+}
+
+.contact-form-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    color: var(--heading-color);
+}
+
+.contact-form-section .section-description {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    font-size: 1.05em;
+    color: #555;
+}
+
+.contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--light-background); /* Using variable for consistency */
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    /* Consider using var(--border-radius) for consistency or 5px if desired difference */
+    border-radius: 5px; /* Or var(--border-radius) */
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--white);
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 120px;
+}
+
+/* Submit button for contact form */
+.contact-form .button.primary-button {
+    width: 100%; /* Make button full width in form */
+    padding: 14px 28px; /* Reset padding to general button style */
+    font-size: 1rem; /* Reset font size to general button style */
+    margin-top: 15px;
+    display: block; /* Ensure it takes full width and centers if needed */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Projects Page Specific Styles --- */
+
+/* Heading for project categories */
+.project-category-heading {
+    font-size: 2.25rem; /* Larger heading for categories */
+    margin-top: var(--spacing-lg); /* Space above each category */
+    margin-bottom: var(--spacing-md);
+    text-align: center; /* Center align category headings */
+    color: var(--heading-color);
+}
+
+/* Grid layout for displaying project cards */
+.project-grid-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid columns */
+    gap: var(--spacing-md); /* Space between project cards */
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg); /* Space below each grid section */
+}
+
+/* Specific styling for project cards containing iframes */
+/* Inherits most styles from .service-card, but can be customized further */
+.service-card.project-iframe-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--spacing-sm); /* Slightly less padding to accommodate iframe */
+    background-color: var(--white); /* Ensure white background for embeds */
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Ensures iframe corners match card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card.project-iframe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.service-card.project-iframe-card h4 {
+    font-size: 1.375rem; /* Title for each project */
+    margin-top: var(--spacing-sm);
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    padding: 0 var(--spacing-sm); /* Match card padding */
+}
+
+.service-card.project-iframe-card p {
+    font-size: 1rem;
+    color: var(--light-text-color);
+    flex-grow: 1; /* Ensures text takes space */
+    margin-bottom: var(--spacing-sm);
+    padding: 0 var(--spacing-sm); /* Match card padding */
+}
+
+.service-card.project-iframe-card .read-more {
+    margin-top: var(--spacing-sm);
+    padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm); /* Add padding to align link with card */
+    text-align: left; /* Align 'Learn More' link to the left */
+}
+
+
+/* Responsive adjustments for Projects page */
+@media (max-width: 992px) {
+    .project-category-heading {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-category-heading {
+        font-size: 1.75rem;
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+    }
+    .project-grid-display {
+        grid-template-columns: 1fr; /* Stack project cards on smaller screens */
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+    .service-card.project-iframe-card {
+        padding: var(--spacing-sm);
+    }
+    .service-card.project-iframe-card h4 {
+        font-size: 1.25rem;
+    }
+    .service-card.project-iframe-card p {
+        font-size: 0.95rem;
+    }
+    .iframe-container {
+        border-radius: var(--border-radius); /* Ensure consistent rounded corners */
+    }
+}
+
+@media (max-width: 480px) {
+    .project-category-heading {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* --- Responsive Adjustments --- */
+
+/* Adjustments for screens larger than 769px (Desktop/Tablet landscape) */
+@media (min-width: 769px) {
+    /* Header and Nav */
+    .header {
+        padding: var(--spacing-sm) 0; /* Consistent padding */
+    }
+
+    .nav-links {
+        display: flex; /* Ensures nav links are horizontal on large screens */
+        flex-direction: row; /* Horizontal layout */
+        position: static; /* Removes absolute positioning from mobile menu */
+        top: auto;
+        left: auto;
+        width: auto;
+        height: auto; /* Reset height */
+        background-color: transparent; /* No background needed */
+        backdrop-filter: none;
+        box-shadow: none;
+        padding: 0;
+        border-top: none;
+        overflow-y: visible; /* Allows overflow for desktop dropdown */
+        animation: none; /* No animation for desktop menu */
+    }
+
+    .nav-links ul { /* Target the actual <ul> inside nav-links */
+        display: flex; /* Ensure the inner ul is also flex for desktop */
+    }
+
+    .nav-links li {
+        text-align: left; /* Resets text alignment */
+        padding: 0;
+    }
+
+    .nav-links a {
+        padding: 8px 0; /* Resets padding to desktop defaults */
+        font-size: 1rem; /* Original font size */
+    }
+
+    .mobile-menu-button {
+        display: none; /* Hides hamburger icon on large screens */
+    }
+
+    /* Ensure desktop dropdowns work correctly on desktop (controlled by hover/focus-within) */
+    .has-dropdown .dropdown-menu {
+        position: absolute;
+        display: none; /* Hidden by default for desktop, shown via CSS hover */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+    }
+    .has-dropdown:hover .dropdown-menu,
+    .has-dropdown:focus-within .dropdown-menu {
+        display: block; /* Show on hover/focus */
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Contact Form Button - revert to auto width on desktop */
+    .contact-form .button.primary-button {
+        width: auto;
+    }
+}
+
+
+/* Adjustments for screens up to 992px (Tablet portrait / Smaller Laptops) */
+@media (max-width: 992px) {
+    .container {
+        padding: 0 var(--spacing-sm); /* Reduce horizontal padding */
+    }
+
+    /* About Page grid stacking */
+    .about-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .about-intro-text,
+    .about-experience,
+    .about-credentials {
+        text-align: center;
+    }
+    .about-intro-text h2,
+    .about-experience h2,
+    .about-credentials h2,
+    .map-section-item h3 {
+        text-align: center;
+    }
+    .map-section-item p {
+        /* Keep map descriptions left-aligned if they wrap more easily */
+        text-align: left;
+    }
+    .credentials-list {
+        padding: 0 var(--spacing-sm); /* Adjust padding for list on smaller screens */
+    }
+    .credentials-list li {
+        /* Checkmarks will remain due to no override, which is good */
+    }
+    .contact-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 40px;
+    }
+    .contact-info-block,
+    .contact-location-block {
+        padding: 30px;
+    }
+    .footer-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjust footer columns */
+    }
+}
+
+
+/* Adjustments for screens up to 768px (Tablet portrait / Mobile) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem; /* Smaller H1 for mobile */
+    }
+
+    h2 {
+        font-size: 1.75rem; /* Smaller H2 for mobile */
+    }
+
+    h3 {
+        font-size: 1.5rem; /* Smaller H3 for mobile */
+    }
+
+    p {
+        font-size: 1rem; /* Smaller paragraphs for mobile */
+    }
+
+    .section-description {
+        font-size: 1.125rem; /* Smaller section description */
+        margin-bottom: var(--spacing-md); /* Adjust margin */
+    }
+
+    section {
+        padding: var(--spacing-md) 0; /* Reduce section vertical padding */
+    }
+
+    /* Header adjustments for mobile */
+    .header {
+        padding: 0 var(--spacing-sm); /* Ensure horizontal padding on header */
+    }
+
+    /* Mobile Navigation Specifics */
+    .nav-links {
+        display: none; /* Hidden by default, shown when 'active' class is added via JS */
+        flex-direction: column;
+        position: fixed; /* Fixed position for full screen overlay effect */
+        top: var(--header-height); /* Positions below the header */
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height)); /* Takes full height below header */
+        background-color: rgba(255, 255, 255, 0.98); /* More opaque background for mobile menu */
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: var(--spacing-sm) 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        overflow-y: auto; /* Enables scrolling for long menus on small screens */
+        animation: slideIn 0.3s forwards; /* Slide-in animation for mobile menu */
+    }
+
+    .nav-links.active {
+        display: flex; /* Makes the mobile menu visible */
+    }
+
+    .nav-links ul { /* Target the actual <ul> inside nav-links for mobile */
+        flex-direction: column; /* Stack menu items vertically */
+        gap: 0; /* Remove gap */
+        width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%; /* Full width for list items */
+        text-align: center; /* Centers menu items */
+        padding: 10px 0; /* Add vertical padding for menu items */
+    }
+
+    .nav-links a {
+        display: block; /* Makes entire area of li clickable */
+        padding: 10px 0; /* Adjust padding for mobile menu links */
+        font-size: 1.125rem; /* Slightly larger font for mobile menu links */
+    }
+
+    /* Hide desktop dropdown arrow on mobile view */
+    .nav-links .dropdown-arrow {
+        display: none;
+    }
+
+    /* Mobile Dropdown specific overrides (controlled by JS active class on .has-dropdown) */
+    .has-dropdown .dropdown-menu {
+        position: static; /* Removes absolute positioning for mobile dropdown */
+        display: none; /* Hidden by default, controlled by JS for mobile */
+        opacity: 1; /* Always visible when shown */
+        visibility: visible;
+        transform: translateY(0);
+        box-shadow: none;
+        padding: 0;
+        background-color: transparent; /* Inherits parent background */
+        border-radius: 0;
+        border-top: 1px solid rgba(0,0,0,0.05); /* Separator line for sub-menu */
+    }
+
+    /* Show mobile dropdown when parent li has 'active' class */
+    .has-dropdown.active .dropdown-menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dropdown-menu li a {
+        padding: 8px var(--spacing-md); /* Adjust padding for nested links */
+        font-size: 1rem; /* Smaller font for nested links */
+        background-color: rgba(0, 0, 0, 0.02); /* Slight background for sub-items */
+        text-align: center; /* Center align nested items */
+    }
+
+    .dropdown-menu li a:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-menu-button {
+        display: flex; /* Shows hamburger icon on mobile */
+    }
+
+    .nav-flex {
+        justify-content: space-between; /* Keeps logo and hamburger button separate */
+    }
+
+    .hero-section h1 {
+        font-size: 3rem; /* Adjusted hero heading for mobile */
+    }
+
+    .hero-section h2 {
+        font-size: 1.5rem; /* Adjusted hero subheading for mobile */
+    }
+
+    .hero-section p {
+        font-size: 1.125rem; /* Adjusted hero paragraph for mobile */
+    }
+
+    .feature-grid {
+        flex-direction: column; /* Stacks feature items vertically */
+        text-align: center;
+    }
+
+    .feature-grid.reverse-order {
+        flex-direction: column; /* Ensures consistent stacking regardless of desktop order */
+    }
+
+    .feature-text, .feature-image {
+        padding: var(--spacing-sm) 0;
+    }
+
+    /* Single column layout for grids on mobile */
+    .portfolio-grid,
+    .services-grid,
+    .footer-grid,
+    .blog-grid,
+    .experience-grid { /* Added blog-grid and experience-grid here */
+        grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+        font-size: 1rem; /* Smaller FAQ question font for mobile */
+    }
+
+    .iframe-container {
+        min-height: 200px; /* Adjust video placeholder height for smaller screens */
+        margin-bottom: var(--spacing-md); /* Adjust margin */
+        max-width: 100%; /* Ensure it takes full width of container on mobile */
+    }
+    .iframe-container.map-ratio-4-3 {
+        padding-bottom: 75%; /* Keep map aspect ratio */
+    }
+
+
+    /* Blog Archive adjustments */
+    .blog-archive-section {
+        padding: 60px 0;
+    }
+    .blog-archive-section h1 {
+        font-size: 2.2em;
+    }
+    .blog-item {
+        padding: 20px;
+    }
+    .blog-item-title {
+        font-size: 1.6em;
+    }
+
+    /* Map Showcase adjustments */
+    .map-showcase-section {
+        padding: 60px 0;
+    }
+    .map-section-item {
+        margin-bottom: 40px;
+    }
+    .map-section-item h3 {
+        font-size: 1.8em;
+    }
+    .map-embed-container { /* This class is now used on a specific iframe-container */
+        margin: 30px auto;
+    }
+    hr {
+        margin: 40px auto;
+    }
+
+    /* Contact Page adjustments */
+    .contact-hero-section h1,
+    .contact-details-section h2,
+    .social-connect-section h2,
+    .contact-form-section h2 {
+        font-size: 2.2em;
+    }
+    .contact-hero-section .section-description,
+    .social-connect-section .section-description,
+    .contact-form-section .section-description {
+        font-size: 1em;
+    }
+    .contact-info-block,
+    .contact-location-block {
+        padding: 25px;
+    }
+    .contact-method {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .contact-method .icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .contact-form {
+        padding: 30px 20px;
+    }
+    .social-icons-large a {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Further adjustments for very small mobile screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem; /* Even smaller H1 */
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem; /* Even smaller hero H1 */
+    }
+
+    .hero-section h2 {
+        font-size: 1.25rem; /* Even smaller hero H2 */
+    }
+
+    .button {
+        padding: 12px 24px;
+        font-size: 0.9rem; /* Smaller button text */
+    }
+    .logo {
+        font-size: 1.3rem; /* Slightly smaller logo text */
+    }
+}
+
+/* Keyframe animation for mobile menu slide-in effect */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%); /* Starts off-screen to the right */
+    }
+    to {
+        transform: translateX(0); /* Slides into view */
+    }
+}
