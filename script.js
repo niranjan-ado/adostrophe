@@ -174,3 +174,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Gemini AI Assistant Simulation for FAQ Page
+document.addEventListener('DOMContentLoaded', () => {
+    const geminiQuestionButtons = document.querySelectorAll('.gemini-question-button');
+    const geminiResponseArea = document.getElementById('gemini-response');
+
+    // Define the static responses for each question
+    const responses = {
+        "cost-2bhk": "For a 2BHK apartment in Bangalore, the cost of a Matterport scan typically starts from around INR 7,000 to INR 15,000, depending on the exact area, any specific features you want highlighted, and additional deliverables like floor plans. Please contact us for a precise quote tailored to your property.",
+        "large-factory-chennai": "Yes, we absolutely can! Scanning a large factory in Chennai is well within our capabilities. The duration depends on the total square footage, complexity (e.g., machinery, multi-levels), and required detail. Such projects usually take 1-3 days for scanning, with digital twin delivery within a week. We'd conduct a detailed site assessment to give you an accurate timeline.",
+        "services-mumbai": "Adostrophe provides Matterport and 3D immersive services across all major Indian cities, including Mumbai, Delhi, Bangalore, Chennai, Kolkata, Pune, Hyderabad, and Ahmedabad. Our teams are equipped to travel nationwide to bring our cutting-edge solutions to your doorstep.",
+        "real-estate-benefits": "For real estate in Delhi, Matterport virtual tours offer immense benefits: 1. **24/7 Open Houses:** Buyers can tour properties anytime, anywhere, increasing reach. 2. **Reduced Physical Viewings:** Qualify leads more effectively, saving time. 3. **Enhanced Marketing:** Stand out with immersive listings. 3. **Transparency & Trust:** Build buyer confidence by offering a complete view. 4. **Faster Sales Cycles:** Engaged buyers make decisions quicker.",
+        "2d-floor-plans": "Yes, you can! From your Matterport scan, we can generate highly accurate 2D floor plans of your property in Pune. These are perfect for marketing materials, space planning, or providing a clear layout to potential buyers. We offer various export formats to suit your needs.",
+        "lighting-retail": "For scanning your retail store in Kolkata, optimal lighting is crucial. We recommend: 1. **Bright, Even Lighting:** Turn on all lights, including accent lighting. 2. **Minimize Harsh Shadows:** Avoid direct, strong spotlights that create deep shadows. 3. **Natural Light:** Open blinds or curtains, but be mindful of direct sunlight causing overexposure. 4. **Clean Windows/Mirrors:** These can cause reflections if not clean. Good lighting ensures the best visual quality and accurate data capture for your digital twin."
+    };
+
+    // Add click event listeners to each question button
+    geminiQuestionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const questionKey = button.dataset.question; // Get the key from data-question attribute
+            // Update the response area with the corresponding answer
+            geminiResponseArea.innerHTML = `<p>${responses[questionKey]}</p>`;
+            // Optionally, scroll the response into view for better UX on smaller screens
+            geminiResponseArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    });
+});
