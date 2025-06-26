@@ -34,7 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // If it's closed, open it
                 answer.classList.add('open');
-                answer.style.maxHeight = answer.scrollHeight + 'px'; // Dynamically set max-height to content height
+                // *** IMPORTANT CHANGE HERE ***
+                // Setting a large fixed max-height instead of using scrollHeight,
+                // as scrollHeight was returning an incorrect value.
+                // CSS transition will handle the smooth animation up to the content's actual height.
+                answer.style.maxHeight = '2000px'; // You can increase this if you have extremely long answers (e.g., '9999px')
+                // **************************
                 question.classList.add('active');
                 // Set ARIA attributes for open state
                 question.setAttribute('aria-expanded', 'true');

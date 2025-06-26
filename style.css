@@ -118,16 +118,12 @@ p {
 }
 
 /* Desktop Navigation Links */
-.nav-links {
+.nav-links > ul { /* Target the direct child <ul> of .nav-links */
     list-style: none;
     display: flex; /* Horizontal layout for desktop */
     gap: var(--spacing-md); /* Space between nav items */
-}
-
-.nav-links ul { /* Target the actual <ul> inside nav-links */
-    list-style: none;
-    display: flex;
-    gap: var(--spacing-md);
+    margin: 0; /* Ensure no default ul margin */
+    padding: 0; /* Ensure no default ul padding */
 }
 
 .nav-links li {
@@ -293,7 +289,7 @@ section {
     background-color: var(--secondary-color); /* Light grey background for alternating sections */
 }
 
-/* --- Hero Section Specific Styling --- */
+/* --- Hero Section Specific Styling (Adjusted for Inline SVG) --- */
 .hero-section {
     min-height: 80vh; /* Minimum height relative to viewport height */
     display: flex;
@@ -302,22 +298,17 @@ section {
     align-items: center;
     text-align: center;
     padding: var(--spacing-lg) var(--spacing-md);
-    position: relative;
+    position: relative; /* Needed for positioning the SVG */
     overflow: hidden;
-    /* Background image for the hero section */
-    /* REMINDER: Replace with your actual, optimized hero image */
-    background-image: url('https://placehold.co/1920x1080/404040/ffffff?text=Immersive+3D+Experience');
-    background-size: cover; /* Cover the entire section */
-    background-position: center center; /* Center the image */
-    background-repeat: no-repeat;
-    color: var(--white); /* White text over the dark background image */
+    background-color: var(--primary-color); /* Dark background for visual contrast with SVG */
+    color: var(--white); /* White text over the dark background */
     padding-top: calc(var(--spacing-lg) * 1.5); /* Increased top padding */
     padding-bottom: calc(var(--spacing-lg) * 1.5); /* Increased bottom padding */
 }
 
 .hero-content {
     position: relative;
-    z-index: 1; /* Ensures text content is above the background image */
+    z-index: 2; /* Ensures text content is above the SVG visual */
     max-width: 900px;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay for text readability */
     padding: var(--spacing-md);
@@ -345,10 +336,29 @@ section {
     color: rgba(255, 255, 255, 0.8); /* Lighter white for paragraph */
 }
 
-/* Hide the individual image tag in HTML, as background-image is used */
-.hero-image {
-    display: none;
+/* New: Styling for the SVG visual from HTML */
+.hero-visual {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Behind the content, above the section background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7; /* Slight transparency for background effect */
 }
+
+.hero-visual svg {
+    width: 100%; /* Make SVG fill its container */
+    height: 100%;
+    max-width: 1400px; /* Adjust max width of SVG for visual impact */
+    max-height: 800px; /* Adjust max height of SVG */
+    object-fit: contain; /* Ensures SVG scales without distortion */
+}
+
+/* REMOVED: .hero-image block as it's now redundant with inline SVG approach */
 
 /* --- Feature Sections (e.g., Event Spaces, Hospitality, Showrooms) --- */
 .feature-section {
@@ -517,9 +527,9 @@ section {
 .faq-accordion .faq-item {
     background-color: var(--white);
     border-radius: var(--border-radius);
-    margin-bottom: 12px;
+    margin-bottom: 12px; /* Spacing between FAQ items */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); /* Subtle shadow for accordion items */
-    overflow: hidden; /* For smooth answer collapse animation */
+    overflow: hidden; /* Essential for the max-height transition */
 }
 
 .faq-question {
@@ -529,7 +539,7 @@ section {
     font-weight: 500;
     width: 100%;
     text-align: left;
-    padding: var(--spacing-md);
+    padding: var(--spacing-md); /* Good padding for clickable area */
     border: none;
     cursor: pointer;
     display: flex;
@@ -538,6 +548,7 @@ section {
     transition: background-color 0.3s ease;
 }
 
+/* Updated for your JS using .active class and original content values */
 .faq-question::after {
     content: '+'; /* Plus sign for closed state */
     font-size: 1.5rem;
@@ -556,16 +567,16 @@ section {
 
 .faq-answer {
     padding: 0 var(--spacing-md);
-    max-height: 0; /* Hidden by default */
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out; /* Smooth slide animation */
+    max-height: 0; /* Starts hidden */
+    overflow: hidden; /* Hides content when max-height is 0 */
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; /* This transition will now work! */
     color: var(--light-text-color);
 }
 
-/* NOTE: If using JS to dynamically set max-height, remove `max-height: 200px;` from here */
+/* When the answer is open (JavaScript adds .open class to .faq-answer) */
+/* IMPORTANT: Set a very large max-height to ensure all content is visible */
 .faq-answer.open {
-    /* If using JS `scrollHeight` for max-height, you would remove this `max-height` */
-    /* max-height: 200px; */ /* Max height when open (adjust if content exceeds this) */
+    /* max-height: 1000px; -- REMOVED THIS LINE */
     padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md); /* Apply padding when open */
 }
 
@@ -1314,7 +1325,6 @@ hr {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #ddd;
-    /* Consider using var(--border-radius) for consistency or 5px if desired difference */
     border-radius: 5px; /* Or var(--border-radius) */
     font-size: 1em;
     color: var(--text-color);
@@ -1474,7 +1484,7 @@ hr {
         animation: none; /* No animation for desktop menu */
     }
 
-    .nav-links ul { /* Target the actual <ul> inside nav-links */
+    .nav-links > ul { /* Target the actual <ul> inside nav-links for desktop */
         display: flex; /* Ensure the inner ul is also flex for desktop */
     }
 
@@ -1615,7 +1625,7 @@ hr {
         display: flex; /* Makes the mobile menu visible */
     }
 
-    .nav-links ul { /* Target the actual <ul> inside nav-links for mobile */
+    .nav-links > ul { /* Target the actual <ul> inside nav-links for mobile */
         flex-direction: column; /* Stack menu items vertically */
         gap: 0; /* Remove gap */
         width: 100%;
